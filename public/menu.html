@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>المنيو</title>
+  <meta name="description" content="منيو إلكتروني — تصفّح الأطباق والأسعار مباشرة من طاولتك.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="menu-header">
+    <div class="container">
+      <div class="brand">
+        <div class="logo" id="restaurant-logo">🍽️</div>
+        <div>
+          <h1 id="restaurant-name">جارٍ التحميل…</h1>
+          <p class="desc" id="restaurant-desc"></p>
+        </div>
+      </div>
+      <div class="menu-meta" id="restaurant-meta"></div>
+    </div>
+  </header>
+
+  <div class="search-bar hidden" id="search-bar">
+    <div class="container">
+      <div class="row">
+        <input id="search-input" type="search" placeholder="🔍 ابحث عن طبق…" aria-label="البحث في المنيو">
+        <span class="badge hidden" id="table-badge"></span>
+      </div>
+      <nav class="category-nav" id="category-nav" aria-label="فئات المنيو"></nav>
+    </div>
+  </div>
+
+  <main class="menu-body">
+    <div class="container" id="menu-root"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container center">
+      <p>شكراً لزيارتكم — نتشرّف بخدمتكم 🍽️</p>
+    </div>
+  </footer>
+
+  <div class="toasts" id="toasts"></div>
+  <script src="/js/common.js"></script>
+  <script src="/js/menu.js"></script>
+</body>
+</html>

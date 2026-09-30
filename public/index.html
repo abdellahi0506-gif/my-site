@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>طعم الشرق | نظام المنيو الإلكتروني للمطاعم</title>
+  <meta name="description" content="نظام منيو إلكتروني بسيط للمطاعم: منيو عربي متجاوب، رمز QR لكل طاولة، ولوحة تحكم كاملة لإدارة الفئات والأطباق والأسعار.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <section class="hero">
+    <div class="container">
+      <div class="brand-mark">🍽️</div>
+      <h1>طعم الشرق — منيو إلكتروني بلمسة عربية</h1>
+      <p>بدّل المنيو الورقي بمنيو إلكتروني أنيق: الزائر يمسح رمز QR على الطاولة، يشاهد الأطباق بالصور والأسعار، دون تحميل أي تطبيق.</p>
+      <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
+        <a class="btn" href="/menu/1">📖 تجربة المنيو (مطعم طعم الشرق)</a>
+        <a class="btn btn-outline" href="/admin.html" style="color:#f8f2e9;border-color:rgba(255,255,255,.35)">🔐 لوحة التحكم</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <section class="features">
+      <div class="feature">
+        <div class="icon">📖</div>
+        <h3>منيو عربي متجاوب</h3>
+        <p class="text-muted">تصميم RTL يعمل على الجوال والحاسب، مع بحث فوري وتنقّل بين الفئات.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔳</div>
+        <h3>رمز QR لكل طاولة</h3>
+        <p class="text-muted">أنشئ طاولات بأرقامها، حمّل رمز QR أو اطبعه جاهزاً للصق على الطاولة.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🛠️</div>
+        <h3>لوحة تحكم كاملة</h3>
+        <p class="text-muted">أضف الفئات والأطباق والصور والأسعار، وتحكّم في إتاحة كل طبق بضغطة.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🗄️</div>
+        <h3>MySQL مع بديل جاهز</h3>
+        <p class="text-muted">يعمل على MySQL/MariaDB، ومع عدم توفره ينتقل تلقائياً إلى قاعدة SQLite مدمجة.</p>
+      </div>
+    </section>
+
+    <section class="card steps" style="padding:1.75rem">
+      <h2>كيف يعمل؟</h2>
+      <div class="step"><div><strong>جهّز قاعدة البيانات</strong><p class="text-muted">شغّل <code dir="ltr">npm run init-db</code> لإنشاء الجداول وإدراج بيانات مطعم تجريبي.</p></div></div>
+      <div class="step"><div><strong>أضف الأطباق</strong><p class="text-muted">ادخل إلى لوحة التحكم بالرقم <code dir="ltr">/admin.html</code> وكلمة المرور <code dir="ltr">admin123</code> ثم أنشئ فئاتك وأطباقك.</p></div></div>
+      <div class="step"><div><strong>أضف الطاولات واطبع QR</strong><p class="text-muted">لكل طاولة رابط <code dir="ltr">/menu/1?table=3</code> ورمز QR جاهز للطباعة.</p></div></div>
+      <div class="step"><div><strong>شارك المنيو</strong><p class="text-muted">ضع الرمز على الطاولة، وسيظهر المنيو للزائر فور تحديثه من لوحة التحكم.</p></div></div>
+    </section>
+
+    <section class="card" style="padding:1.75rem;margin-top:1.5rem">
+      <h2>واجهات API الجاهزة</h2>
+      <div class="table-wrap">
+        <table style="width:100%;border-collapse:collapse;font-size:.92rem">
+          <thead>
+            <tr style="text-align:start;color:var(--muted)">
+              <th style="padding:.5rem;text-align:start">المسار</th>
+              <th style="padding:.5rem;text-align:start">الوصف</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:.5rem" dir="ltr"><code>GET /api/menu/:restaurantId</code></td><td style="padding:.5rem">منيو الزائر (عام)</td></tr>
+            <tr><td style="padding:.5rem" dir="ltr"><code>POST /api/admin/login</code></td><td style="padding:.5rem">تسجيل الدخول وإرجاع توكن JWT</td></tr>
+            <tr><td style="padding:.5rem" dir="ltr"><code>GET /api/admin/menu</code></td><td style="padding:.5rem">الفئات والأطباق (لوحة التحكم)</td></tr>
+            <tr><td style="padding:.5rem" dir="ltr"><code>POST /api/admin/menu-items</code></td><td style="padding:.5rem">إضافة طبق مع صورة</td></tr>
+            <tr><td style="padding:.5rem" dir="ltr"><code>GET /api/admin/tables</code></td><td style="padding:.5rem">الطاولات مع روابط QR</td></tr>
+            <tr><td style="padding:.5rem" dir="ltr"><code>GET /api/menu/:id/qr?table=3&format=png</code></td><td style="padding:.5rem">صورة QR جاهزة للطباعة</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container center">
+      <p>طعم الشرق — نظام منيو إلكتروني مفتوح للتعديل (Node.js + Express).</p>
+    </div>
+  </footer>
+
+</body>
+</html>
