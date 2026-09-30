@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>لوحة التحكم | طعم الشرق</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- ============ شاشة تسجيل الدخول ============ -->
+  <div class="login-screen" id="login-screen">
+    <div class="login-card">
+      <div class="brand-mark">🍽️</div>
+      <h1>لوحة تحكم المطعم</h1>
+      <p class="sub">أدخل كلمة المرور لإدارة المنيو والطاولات</p>
+      <form id="login-form">
+        <div class="field">
+          <label for="login-restaurant">رقم المطعم (اختياري)</label>
+          <input id="login-restaurant" type="number" min="1" placeholder="اتركه فارغاً إن كان لديك مطعم واحد">
+          <div class="hint">يُستخدم عند إدارة أكثر من مطعم بنفس النظام.</div>
+        </div>
+        <div class="field">
+          <label for="login-password">كلمة المرور</label>
+          <input id="login-password" type="password" required autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <button class="btn btn-block" type="submit" id="login-submit">دخول</button>
+      </form>
+      <p class="sub" style="margin-top:1.25rem;margin-bottom:0">
+        كلمة المرور الافتراضية <code dir="ltr">admin123</code> — غيّرها من الإعدادات بعد الدخول.
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ التطبيق ============ -->
+  <div class="admin-layout hidden" id="app">
+
+    <aside class="admin-side">
+      <div class="brand">
+        <div class="logo" id="side-logo">🍽️</div>
+        <span class="name" id="side-name">…</span>
+      </div>
+      <nav>
+        <button data-view="dashboard" class="active">📊 لوحة المعلومات</button>
+        <button data-view="menu">📋 المنيو</button>
+        <button data-view="tables">🪑 الطاولات و QR</button>
+        <button data-view="settings">⚙️ الإعدادات</button>
+      </nav>
+      <div class="spacer"></div>
+      <a class="btn btn-outline btn-sm" id="menu-link" href="/menu/1" target="_blank" rel="noopener">👁️ معاينة المنيو</a>
+      <button class="btn btn-dark btn-sm" id="logout-button">🚪 خروج</button>
+      <div class="side-foot">قاعدة البيانات: <span id="db-client">—</span></div>
+    </aside>
+
+    <main class="admin-main">
+      <div class="admin-top">
+        <h1 id="top-title">لوحة التحكم</h1>
+      </div>
+
+      <!-- ---------- لوحة المعلومات ---------- -->
+      <section data-view-panel="dashboard">
+        <div class="stats" id="stats-grid"></div>
+        <div class="panel">
+          <div class="panel-head"><h2>خطوات سريعة</h2></div>
+          <p class="text-muted">١. أضف فئات المنيو (مقبلات، أطباق رئيسية…). ٢. أضف الأطباق مع الصور والأسعار. ٣. أضف أرقام الطاولات واطبع رمز QR لكل طاولة.</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem">
+            <a class="btn" id="quick-menu-link" href="/menu/1" target="_blank" rel="noopener">👁️ عرض المنيو</a>
+            <button class="btn btn-outline" data-goto="menu">📋 إدارة الأطباق</button>
+            <button class="btn btn-outline" data-goto="tables">🪑 الطاولات و QR</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- المنيو ---------- -->
+      <section data-view-panel="menu" class="hidden">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>فئات المنيو والأطباق</h2>
+            <button class="btn" id="add-category-button">➕ إضافة فئة</button>
+          </div>
+          <div id="menu-list"></div>
+        </div>
+      </section>
+
+      <!-- ---------- الطاولات ---------- -->
+      <section data-view-panel="tables" class="hidden">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>إضافة طاولة</h2>
+          </div>
+          <form id="table-form" style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:flex-end">
+            <div class="field" style="margin:0;min-width:180px">
+              <label for="table-number">رقم الطاولة</label>
+              <input id="table-number" type="number" min="1" max="9999" required placeholder="مثال: 6">
+            </div>
+            <button class="btn" type="submit">➕ إضافة و توليد QR</button>
+          </form>
+          <p class="text-muted" style="margin-top:.75rem">
+            يُولَّد رابط المنيو تلقائياً من عنوان الموقع الحالي. يمكنك تثبيت عنوان ثابت بإضافة
+            <code dir="ltr">BASE_URL</code> في ملف <code dir="ltr">.env</code>.
+          </p>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h2>طاولات المطعم</h2></div>
+          <div class="tables-grid" id="tables-list"></div>
+        </div>
+      </section>
+
+      <!-- ---------- الإعدادات ---------- -->
+      <section data-view-panel="settings" class="hidden">
+        <div class="panel">
+          <div class="panel-head"><h2>بيانات المطعم</h2></div>
+          <form id="settings-form">
+            <div class="grid-2">
+              <div class="field">
+                <label for="set-name">اسم المطعم *</label>
+                <input id="set-name" required maxlength="255">
+              </div>
+              <div class="field">
+                <label for="set-currency">العملة</label>
+                <select id="set-currency">
+                  <option value="SAR">ريال سعودي (SAR)</option>
+                  <option value="AED">درهم إماراتي (AED)</option>
+                  <option value="KWD">دينار كويتي (KWD)</option>
+                  <option value="QAR">ريال قطري (QAR)</option>
+                  <option value="BHD">دينار بحريني (BHD)</option>
+                  <option value="OMR">ريال عماني (OMR)</option>
+                  <option value="EGP">جنيه مصري (EGP)</option>
+                  <option value="JOD">دينار أردني (JOD)</option>
+                  <option value="USD">دولار أمريكي (USD)</option>
+                  <option value="EUR">يورو (EUR)</option>
+                  <option value="TRY">ليرة تركية (TRY)</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="set-description">وصف المطعم</label>
+              <textarea id="set-description" maxlength="5000"></textarea>
+            </div>
+            <div class="grid-2">
+              <div class="field">
+                <label for="set-phone">رقم الهاتف</label>
+                <input id="set-phone" maxlength="20" placeholder="+966501234567">
+              </div>
+              <div class="field">
+                <label for="set-email">البريد الإلكتروني</label>
+                <input id="set-email" type="email" maxlength="255">
+              </div>
+            </div>
+            <div class="field">
+              <label for="set-address">العنوان</label>
+              <input id="set-address" maxlength="500">
+            </div>
+            <div class="field">
+              <label for="set-logo">شعار المطعم</label>
+              <input id="set-logo" type="file" accept="image/*">
+              <div class="image-preview" id="set-logo-preview"></div>
+            </div>
+            <button class="btn" type="submit">💾 حفظ الإعدادات</button>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h2>تغيير كلمة المرور</h2></div>
+          <form id="password-form">
+            <div class="grid-2">
+              <div class="field">
+                <label for="pass-current">كلمة المرور الحالية</label>
+                <input id="pass-current" type="password" required autocomplete="current-password">
+              </div>
+              <div class="field">
+                <label for="pass-new">كلمة المرور الجديدة</label>
+                <input id="pass-new" type="password" required minlength="6" autocomplete="new-password">
+                <div class="hint">٦ أحرف على الأقل.</div>
+              </div>
+            </div>
+            <button class="btn btn-outline" type="submit">🔐 تحديث كلمة المرور</button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modal-root"></div>
+  <div class="toasts" id="toasts"></div>
+
+  <script src="/js/common.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
